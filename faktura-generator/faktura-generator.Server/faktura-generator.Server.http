@@ -1,0 +1,6 @@
+@faktura_generator.Server_HostAddress = http://localhost:5165
+
+GET {{faktura_generator.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

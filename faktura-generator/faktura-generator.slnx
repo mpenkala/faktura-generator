@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="faktura-generator.client/faktura-generator.client.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="faktura-generator.Server/faktura-generator.Server.csproj" />
+</Solution>
