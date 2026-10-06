@@ -1,4 +1,15 @@
+using Serilog;
+using Xmarton.Commons.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
+builder.Host
+    .AddLocalConfigFile()
+    .UseSerilog((context, config) =>
+    {
+        config
+            .ReadFrom.Configuration(context.Configuration)
+        .Enrich.FromLogContext();
+    });
 
 // Add services to the container.
 
