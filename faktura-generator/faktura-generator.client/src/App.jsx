@@ -4,13 +4,15 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.jsx.scss';
 import xmartonTemplate from './assets/xmarton.html?raw';
+import kminaTemplate from './assets/kmina.html?raw';
+import imspTemplate from './assets/imsp.html?raw';
 
 const templates = [
-    { label: 'Xmarton', value: 'xmarton' },
+    { label: 'Xmarton', value: 'xmarton', id: '01', hourRate: 750, bonusRate: 25.3, html: xmartonTemplate },
+    { label: 'IMSP', value: 'imsp', id: '03', hourRate: 750, bonusRate: 25.3, html: imspTemplate },
+    { label: 'Kmína', value: 'kmina', id: '04', hourRate: 391.7647, bonusRate: 0, html: kminaTemplate },
 ]
 
-const HOURLY_RATE = 750; // Kč za hodinu
-const BONUS_RATE = 25.3; // % z ceny
 const VAT_RATE = 0.21; // 21% DPH
 const DUE_INTERVAL = 20;
 
@@ -22,26 +24,26 @@ function formatCzechCurrency(value) {
 }
 
 function initNumber(template) {
-    switch (template) {
-        case 'xmarton': {
-            var date = new Date();
-            var prevMonthIdx = date.getMonth() - 1;
-            var year = date.getFullYear();
-            if (prevMonthIdx === -1) {
-                prevMonthIdx = 11;
-                year -= 1;
-            }
-            var prevMonth = String(prevMonthIdx + 1).padStart(2, '0');
-            return `${year}01${prevMonth}`;
-        }
-        default: return '';
+    if (!template) {
+        return '';
     }
+
+    var date = new Date();
+    var prevMonthIdx = date.getMonth() - 1;
+    var year = date.getFullYear();
+    if (prevMonthIdx === -1) {
+        prevMonthIdx = 11;
+        year -= 1;
+    }
+    var prevMonth = String(prevMonthIdx + 1).padStart(2, '0');
+    return `${year}${template.id}${prevMonth}`;
+
 }
 
 function App() {
 
-    const [template, setTemplate] = useState('xmarton');
-    const [number, setNumber] = useState(initNumber('xmarton'));
+    const [template, setTemplate] = useState(templates[0]);
+    const [number, setNumber] = useState(initNumber(templates[0]));
     const [hours, setHours] = useState('');
     const invoiceFrameRef = useRef(null);
     const [generatedHtml, setGeneratedHtml] = useState(null);
@@ -65,7 +67,7 @@ function App() {
 
         try {
             const formData = Object.fromEntries(new FormData(e.currentTarget));
-            const { number, hours } = formData;
+            const { number, hours, template } = formData;
 
             if (!number || !hours) {
                 toast.error('Vyplňte všechna povinná pole');
@@ -78,10 +80,13 @@ function App() {
                 return;
             }
 
+            let templateDef = templates.find(o => o.value === template)
+                || { hourRate: 750, bonusRate: 0 };
+
             // Výpočet cen
-            const price = hoursNum * HOURLY_RATE;
+            const price = hoursNum * templateDef.hourRate;
             const priceWithVat = price * (1 + VAT_RATE);
-            const bonus = price * (BONUS_RATE / 100);
+            const bonus = price * (templateDef.bonusRate / 100);
             const bonusWithVat = bonus * (1 + VAT_RATE);
             const taxableBase = price + bonus;
             const vatAmount = taxableBase * VAT_RATE;
@@ -110,7 +115,8 @@ function App() {
             const periodText = `${dueDateMonthName} ${dueDateYear}`;
 
             // Nahrazení proměnných v šabloně
-            let html = xmartonTemplate
+            let templateHtml = templateDef.html;
+            let html = templateHtml
                 .replace(/%number%/g, number)
                 .replace(/%hours%/g, hoursNum.toFixed(2))
                 .replace(/%price%/g, formatCzechCurrency(price))
@@ -125,9 +131,9 @@ function App() {
                 .replace(/%taxable_supply_date%/g, taxableSupplyDate)
                 .replace(/%period%/g, periodText);
 
-            console.log('Template loaded:', xmartonTemplate ? 'yes' : 'no');
+            console.log('Template loaded:', templateHtml ? 'yes' : 'no');
             console.log('Generated HTML length:', html.length);
-            console.log('First 200 chars:', html.substring(0, 200));
+            //console.log('First 200 chars:', html.substring(0, 200));
 
             // Zobrazení faktury v iframe
             if (invoiceFrameRef.current) {
@@ -150,7 +156,7 @@ function App() {
                     console.error('Chyba při vytváření blob URL:', err);
                 }
             }
-            console.log('dev', 'html', html);
+            //console.log('dev', 'html', html);
 
             toast.success('Faktura byla vygenerována');
         } catch (error) {
@@ -160,8 +166,9 @@ function App() {
     }
 
     function onChangeTemplate(e) {
-        setTemplate(e.target.value);
-        setNumber(initNumber(e.target.value));
+        const template = templates.find(o => o.value === e.target.value);
+        setTemplate(template);
+        setNumber(initNumber(template));
     }
 
     function handlePrint() {
@@ -203,7 +210,7 @@ function App() {
                 <label>Šablona</label>
                 <select
                     name='template'
-                    value={template}
+                    value={template?.value}
                     onChange={onChangeTemplate}
                     autoFocus
                 >

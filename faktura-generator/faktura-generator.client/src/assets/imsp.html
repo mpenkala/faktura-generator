@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>FA%number%</title>
+    <style>
+        body {
+            padding: 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            font-family: Tahoma, Verdana, Arial;
+            font-size: 14px;
+        }
+
+        .doc {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding-bottom: 10px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .border-ltr {
+            border-left: 1px solid black;
+            border-top: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        .border-lbr {
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+        .doc-type {
+            padding: 5px 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .doc-id-label {
+            padding: 5px;
+        }
+
+        .doc-id {
+            padding: 5px;
+        }
+
+        .info {
+            display: flex;
+        }
+
+        .info-part {
+            flex: 1 1 50%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            padding: 10px 0 4px 20px;
+        }
+
+        .info-data {
+            padding-left: 40px;
+            padding-right: 10px;
+        }
+
+        .row {
+            padding: 2px;
+        }
+
+        .b {
+            font-weight: bold;
+        }
+
+        .data-part {
+            padding-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-spacing: 0;
+        }
+
+        .suma {
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid black;
+            border-left: 1px solid black;
+        }
+
+        .suma-content {
+            display: flex;
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+        }
+
+            .suma-content > * {
+                padding: 10px 20px;
+                font-weight: bold;
+            }
+
+        .al-l {
+            text-align: left;
+        }
+
+        .pa-l-10 {
+            padding-left: 10px;
+        }
+
+        .pa-b-20 {
+            padding-bottom: 20px;
+        }
+
+        .al-c {
+            text-align: center;
+        }
+
+        .dph-col {
+            width: 120px;
+        }
+
+        .dph {
+            display: flex;
+            justify-content: flex-end;
+            padding: 10px;
+        }
+
+        table.dph-table {
+            width: auto;
+        }
+
+        .sign {
+            flex: 1 1 auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            min-height: 100px;
+            border-left: 1px solid black;
+            border-bottom: 1px solid black;
+            border-right: 1px solid black;
+            padding: 30px;
+        }
+
+        .col-r-100 {
+            width: 100px;
+            margin: 0 auto;
+            text-align: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="doc">
+        <div class="header">
+            <div class="header-content border-ltr">
+                <div class="doc-type">Faktura</div>
+                <div class="doc-id-label">číslo:</div>
+                <div class="doc-id b">%number%</div>
+            </div>
+        </div>
+        <div class="info border-ltr">
+            <div class="info-part">
+                <div class="info-label">Dodavatel:</div>
+                <div class="info-data">
+                    <div class="info-address data-part">
+                        <div class="row b">Michal Penkala</div>
+                        <div class="row">Pod Rybníčkem 132</div>
+                        <div class="row">Čerčany, 25722</div>
+                    </div>
+                    <div class="info-ico data-part">
+                        <div class="row">IČ: 88914852</div>
+                        <div class="row">DIČ: CZ8405295514</div>
+                    </div>
+                    <div class="info-note data-part">
+                        Podnikatel zapsán v živ. rejstříku Městského úřadu Benešov
+                    </div>
+                </div>
+            </div>
+            <div class="info-part">
+                <div class="info-label">Odběratel:</div>
+                <div class="info-data">
+                    <div class="info-address data-part">
+                        <div class="row b">Internation Montessori School of Prague, mateřská škola a základní škola, s.r.o.</div>
+                        <div class="row">Opletalova 1013/59</div>
+                        <div class="row">Praha 1, 110 00</div>
+                    </div>
+                    <div class="info-ico data-part">
+                        <div class="row">IČ: 27233464</div>
+                        <div class="row">neplátce DPH</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="payment border-ltr">
+            <div class="info-label">Platební podmínky:</div>
+            <div class="info-data">
+                <table class="payment-table data-part">
+                    <tr>
+                        <td>
+                            <div class="row">Forma úhrady:</div>
+                        </td>
+                        <td>
+                            <div class="row">Bankovním převodem</div>
+                        </td>
+                        <td>
+                            <div class="row">Datum vystavení:</div>
+                        </td>
+                        <td>
+                            <div class="row">%issue_date%</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">Bankovní spojení:</div>
+                        </td>
+                        <td>
+                            <div class="row">BRE Bank S.A. (mBank)</div>
+                        </td>
+                        <td>
+                            <div class="row">Zdanitelné plnění:</div>
+                        </td>
+                        <td>
+                            <div class="row">%taxable_supply_date%</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">Číslo účtu:</div>
+                        </td>
+                        <td>
+                            <div class="row b">670100-2209937602/6210</div>
+                        </td>
+                        <td>
+                            <div class="row b">Datum splatnosti:</div>
+                        </td>
+                        <td>
+                            <!-- splatnost 20 dní -->
+                            <div class="row b">%due_date%</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="row">Variabilní symbol:</div>
+                        </td>
+                        <td>
+                            <div class="row">%number%</div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="detail border-ltr">
+            <div class="info-label">
+                Na základě smlouvy o vytvoření a implementaci software uzavřené 25. 6. 2019
+                a dodatku č. 2 ze dne 21. 9. 2023
+            </div>
+            <div class="info-label">Vám za měsíc <span class="pa-l-10">%period%</span></div>
+            <div class="info-label">
+                <table class="data-part">
+                    <thead>
+                        <tr>
+                            <th class="al-l">
+                                <div class="row">fakturujeme:</div>
+                            </th>
+                            <th>
+                                <div class="row">Počet</div>
+                            </th>
+                            <th>
+                                <div class="row">Jednotka</div>
+                            </th>
+                            <th>
+                                <div class="row">Cena bez DPH</div>
+                            </th>
+                            <th>
+                                <div class="row">DPH</div>
+                            </th>
+                            <th>
+                                <div class="row">Cena s DPH</div>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="pa-l-10">
+                                <div class="row info-label">provoz systému</div>
+                            </td>
+                            <td class="al-c">
+                                <div class="row">1,00</div>
+                            </td>
+                            <td class="al-c">
+                                <div class="row">ks</div>
+                            </td>
+                            <td class="al-c">
+                                <!-- 750 Kč/h -->
+                                <div class="row col-r-100">1 000,00 Kč</div>
+                            </td>
+                            <td class="al-c">
+                                <div class="row">21%</div>
+                            </td>
+                            <td class="al-c">
+                                <div class="row col-r-100">1 210,00 Kč</div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="dph border-ltr">
+            <table class="dph-table">
+                <colgroup>
+                    <col class="dph-col" />
+                    <col class="dph-col" />
+                    <col class="dph-col" />
+                </colgroup>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="row">Základ DPH</div>
+                    </td>
+                    <td>
+                        <div class="row">Výše DPH</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row">DPH 21%</div>
+                    </td>
+                    <td>
+                        <div class="row">1 000,00 Kč</div>
+                    </td>
+                    <td>
+                        <div class="row">210,00 Kč</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="suma">
+            <div class="suma-content">
+                <div class="suma-label">Celkem k úhradě:</div>
+                <div class="suma-label">1 210,00 Kč</div>
+            </div>
+        </div>
+        <div class="sign">
+            <div class="row pa-b-20">Vyřizuje</div>
+            <div class="row">Michal Penkala</div>
+            <div class="row">Tel: +420 736 620 411</div>
+            <div class="row">E-mail: michal.penkala@hotmail.com</div>
+        </div>
+    </div>
+</body>
+
+</html>
